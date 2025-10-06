@@ -1,3 +1,3 @@
 <template>
-  <img src="/pdaas.svg" alt="PDAAS" class="object-contain" />
+  <img src="/pdaas.png" alt="PDAAS" class="object-contain" />
 </template>

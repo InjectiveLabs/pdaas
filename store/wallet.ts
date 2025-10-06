@@ -25,7 +25,7 @@ export const useWalletStore = defineStore('wallet', {
   actions: {
     async init() {
       const sharedWalletStore = useSharedWalletStore()
-      const sharedGeoStore = useSharedGeoStore()
+      const _sharedGeoStore = useSharedGeoStore()
 
       if (!sharedWalletStore.wallet) {
         return
@@ -36,12 +36,12 @@ export const useWalletStore = defineStore('wallet', {
       await traceUserDetails({
         address: sharedWalletStore.address,
         wallet: sharedWalletStore.wallet,
-        geoContinent: sharedGeoStore.geoContinent,
-        geoCountry: sharedGeoStore.geoCountry,
-        ipAddress: sharedGeoStore.ipAddress,
-        browserCountry: sharedGeoStore.browserCountry,
-        vpnDetected: sharedGeoStore.vpnDetected,
-        vpnCheckedTimestamp: sharedGeoStore.vpnCheckedTimestamp
+        geoContinent: _sharedGeoStore.geoContinent,
+        geoCountry: _sharedGeoStore.geoCountry,
+        ipAddress: _sharedGeoStore.ipAddress,
+        browserCountry: _sharedGeoStore.browserCountry,
+        vpnDetected: _sharedGeoStore.vpnDetected,
+        vpnCheckedTimestamp: _sharedGeoStore.vpnCheckedTimestamp
       })
     },
 
@@ -72,61 +72,77 @@ export const useWalletStore = defineStore('wallet', {
       const modalStore = useSharedModalStore()
       const sharedWalletStore = useSharedWalletStore()
 
+      // EVM wallets
       if (wallet === Wallet.Metamask) {
-        await sharedWalletStore.connectMetamask()
+        await sharedWalletStore.connectEvmWallet('metamask')
+      }
+      if (wallet === Wallet.OkxWallet) {
+        await sharedWalletStore.connectEvmWallet('okx-wallet')
+      }
+      if (wallet === Wallet.TrustWallet) {
+        await sharedWalletStore.connectEvmWallet('trust-wallet')
+      }
+      if (wallet === Wallet.Rainbow) {
+        await sharedWalletStore.connectEvmWallet('rainbow')
+      }
+      if (wallet === Wallet.BitGet) {
+        await sharedWalletStore.connectEvmWallet('BitGet')
+      }
+      if (wallet === Wallet.Phantom) {
+        await sharedWalletStore.connectEvmWallet('phantom')
       }
 
+      // Cosmos wallets
       if (wallet === Wallet.Keplr) {
-        await sharedWalletStore.connectKeplr()
+        await sharedWalletStore.connectCosmosWallet('keplr')
       }
-
       if (wallet === Wallet.Leap) {
-        await sharedWalletStore.connectLeap()
+        await sharedWalletStore.connectCosmosWallet('leap')
+      }
+      if (wallet === Wallet.Ninji) {
+        await sharedWalletStore.connectCosmosWallet('ninji')
+      }
+      if (wallet === Wallet.OWallet) {
+        await sharedWalletStore.connectCosmosWallet('owallet')
+      }
+      if (wallet === Wallet.Cosmostation) {
+        await sharedWalletStore.connectCosmosWallet('cosmostation')
       }
 
-      if ([Wallet.Ledger, Wallet.LedgerLegacy].includes(wallet) && address) {
+      if (wallet === Wallet.Ledger && address) {
         await sharedWalletStore.connectLedger({
-          wallet,
+          wallet: Wallet.Ledger as unknown as 'ledger' | 'ledger-legacy',
+          address
+        })
+      }
+      if (wallet === Wallet.LedgerLegacy && address) {
+        await sharedWalletStore.connectLedger({
+          wallet: Wallet.LedgerLegacy as unknown as 'ledger' | 'ledger-legacy',
           address
         })
       }
 
-      if (wallet === Wallet.Phantom) {
-        await sharedWalletStore.connectPhantomWallet()
+      // Ledger/Trezor handled below
+
+      if (wallet === Wallet.TrezorBip32 && address) {
+        await sharedWalletStore.connectTrezor({
+          wallet: Wallet.TrezorBip32 as unknown as 'trezor-bip32' | 'trezor-bip44',
+          address
+        })
+      }
+      if (wallet === Wallet.TrezorBip44 && address) {
+        await sharedWalletStore.connectTrezor({
+          wallet: Wallet.TrezorBip44 as unknown as 'trezor-bip32' | 'trezor-bip44',
+          address
+        })
       }
 
-      if (wallet === Wallet.Ninji) {
-        await sharedWalletStore.connectNinji()
-      }
-
-      if (wallet === Wallet.Cosmostation) {
-        await sharedWalletStore.connectCosmosStation()
-      }
-
-      if (
-        [Wallet.TrezorBip32, Wallet.TrezorBip44].includes(wallet) &&
-        address
-      ) {
-        await sharedWalletStore.connectTrezor({ wallet, address })
-      }
-
-      if (wallet === Wallet.BitGet) {
-        await sharedWalletStore.connectBitGet()
-      }
-
-      if (wallet === Wallet.OkxWallet) {
-        await sharedWalletStore.connectOkxWallet()
-      }
-
+      // WalletConnect handled separately
       if (wallet === Wallet.WalletConnect) {
         await sharedWalletStore.connectWalletConnect()
         await msgBroadcaster.setOptions({
           txTimeout: DEFAULT_BLOCK_TIMEOUT_HEIGHT * 5
         })
-      }
-
-      if (wallet === Wallet.Rainbow) {
-        await sharedWalletStore.connectRainbow()
       }
 
       accountStore.updateSubaccount(sharedWalletStore.defaultSubaccountId || '')
@@ -260,7 +276,10 @@ export const useWalletStore = defineStore('wallet', {
     async signArbitraryData(address: string, message: string) {
       const sharedWalletStore = useSharedWalletStore()
 
-      if ([Wallet.Magic, Wallet.Turnkey].includes(sharedWalletStore.wallet)) {
+      if (
+        sharedWalletStore.wallet === Wallet.Magic ||
+        sharedWalletStore.wallet === Wallet.Turnkey
+      ) {
         return await walletStrategy.signEip712TypedData(
           message,
           sharedWalletStore.address

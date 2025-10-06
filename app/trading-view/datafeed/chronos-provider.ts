@@ -139,6 +139,8 @@ export class ChronosApiProvider {
     delete data.has_no_volume
     data.visible_plots_set = 'ohlcv'
     data.timezone = getTimezone()
+    data.exchange = data.exchange || 'Injective'
+    // note: exchange field comes from backend when available
 
     return data
   }
