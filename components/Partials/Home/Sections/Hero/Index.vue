@@ -6,11 +6,8 @@ import { TradeSubPage } from '@/types'
   <div class="lg:h-screen flex flex-col lg:justify-center max-lg:pt-10 relative z-30">
     <div class="max-w-4xl mx-auto w-full text-center flex flex-col items-center">
       <h1 class="font-semibold mb-10 lg:mb-8">
-        <p class="text-4xl lg:text-7xl">
-          {{ $t('home.openFinance') + ' ' }}
-        </p>
-        <p class="text-blue-500 text-4xl lg:text-[128px] font-bold lg:leading-none">
-          {{ $t('home.reimagined') }}
+        <p class="text-4xl lg:text-7xl text-blue-500 lg:text-[72px] font-extrabold tracking-wide">
+          {{ $t('home.openFinance') }}
         </p>
       </h1>
 

@@ -38,7 +38,7 @@ const filteredTopNavMenu = computed(() =>
         to="/"
         class="pr-4 mr-4 flex justify-center items-center cursor-pointer"
       >
-        <AssetLogo class="h-6 w-8 lg:h-8 lg:w-8 aspect-square" alt="Helix" />
+        <AssetLogo class="h-8 w-20 lg:h-10 lg:w-32 object-contain" alt="PDAAS" />
       </NuxtLink>
 
       <div class="flex space-x-4 max-lg:hidden cursor-pointer">
