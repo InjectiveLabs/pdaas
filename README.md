@@ -15,24 +15,36 @@ _Helix | The Premier Decentralized Spot and Derivatives Exchange_
 
 ## 📚 Getting Started
 
+This repository is self‑contained and vendors the shared `injective-ui` layer, so you can run it without fetching external layers.
+
 1. Clone the repository
 
 ```bash
-$ git clone git@github.com:InjectiveLabs/injective-dex.git
-$ cd injective-dex
-$ yarn
+git clone git@github.com:InjectiveLabs/pdaas.git
+cd pdaas
+yarn
 ```
 
-2. Duplicate the .env.example to .env and fill in the values
-3. Compile the app locally
+2. Optional: copy environment variables template and adjust values
 
 ```bash
-$ yarn dev
+cp .env.example .env
 ```
+
+3. Run the app locally (uses the vendored Injective UI layer)
+
+```bash
+LOCAL_LAYER=true PORT=3000 HOST=0.0.0.0 yarn dev
+```
+
+Notes:
+- `LOCAL_LAYER=true` forces Nuxt to use the vendored `injective-ui` layer in this repo instead of fetching `github:InjectiveLabs/injective-ui/layer#master`.
+- You can omit `PORT`/`HOST` if you prefer defaults; they are shown here to bind on `http://localhost:3000`.
+- If you previously saw “Cannot extend config from github:InjectiveLabs/injective-ui/layer#master”, ensure `LOCAL_LAYER=true` is set when running locally.
 
 ## 📖 Documentation
 
-The `injective-helix` is built using Nuxt and TailwindCSS and its powered by the [injective-ts monorepo](https://github.com/InjectiveLabs/injective-ts/).
+The `injective-helix` UI is built using Nuxt and TailwindCSS and is powered by the [injective-ts monorepo](https://github.com/InjectiveLabs/injective-ts/). This repo vendors the shared `injective-ui` layer for a smooth, self‑contained local development experience while retaining upstream Injective compatibility.
 
 You can always boot the dex locally on your own laptop without having to set up a relayer. You can use the `public` network in your `VITE_NETWORK` `.env` configuration variable and run the `yarn run dev` command. You can find all of the available networks (i.e - predefined set of endpoints) [here](https://github.com/InjectiveLabs/injective-ts/blob/17b1aa5df39d5724baf6262b276980cf722a1cba/packages/networks/src/types.ts#L1). Using these endpoints (from the `public`) network gives the 40% of the trading fees to the community spend pool.
 
@@ -42,16 +54,9 @@ The `injective-helix` uses AWS for deployment. There is a CD pipeline set in the
 
 More details about how to deploy a Nuxt project can be found on their docs.
 
-### Migration to Nuxt3
+### Nuxt3
 
-We've migrated the `injective-helix` repo to Nuxt3 in January, 2023. To make the migration on your fork, there are couple of simple steps that you have to do:
-
-1. Pull the latest codebase from the `injective-dex` repo, `master` branch,
-2. Resolve merge conflicts on your fork,
-3. Install the dependencies `yarn install`
-4. Clean up left overs from the previous deployments `yarn clean-up && rm -rf dist`
-5. Update your `.env` file and add `VITE_` prefix to all of the `.env` variables,
-6. Run the dex `yarn dev`
+This project runs on Nuxt 3. You shouldn’t need any migration steps; just follow the Getting Started section above.
 
 ---
 
