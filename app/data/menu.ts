@@ -46,10 +46,7 @@ export const TRADING_OPTIONS = [
     label: 'navigation.stocks',
     to: { name: TradeSubPage.Stocks }
   },
-  {
-    to: { name: LeaderboardSubPage.Pnl },
-    label: 'navigation.leaderboard'
-  },
+  // Leaderboard removed in this build
   {
     isOpenDepositModal: true,
     label: 'navigation.more.deposit'
@@ -134,11 +131,7 @@ export const getTopNavMenu = () =>
       label: 'navigation.portfolio',
       to: { name: MainPage.Portfolio }
     },
-    {
-      isExpandable: true,
-      children: getMoreMenu(),
-      label: 'navigation.more.title'
-    }
+    // Remove More dropdown entirely in this build
   ] as MenuItem[]
 
 export const getGeoRestrictedTopMenu = () => [
@@ -158,12 +151,7 @@ export const getMobileMenuItems = () =>
       children: PORTFOLIO_MENU_ITEMS
     },
     ...TRADING_OPTIONS,
-    REFERRAL_ITEM,
-    {
-      isExpandable: true,
-      children: getMoreMenu(),
-      label: 'navigation.more.title'
-    }
+    // Referral and More removed
   ] as MenuItem[]
 
 export const getGeoRestrictedMobileMenuItems = () =>

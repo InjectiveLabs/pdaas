@@ -1,9 +1,4 @@
-import { indexerGrpcArchiverApi } from '@/app/Services'
-import {
-  fetchPnlLeaderboard,
-  fetchCompetitionLeaderboard
-} from '@/store/leaderboard/pnlLeaderboard'
-import { LeaderboardDuration, HistoricalPortfolioDuration } from '@/types'
+// Leaderboard store disabled in this build.
 import type { PnlLeaderboard, VolLeaderboard } from '@injectivelabs/sdk-ts'
 
 type LeaderboardStoreState = {
@@ -36,76 +31,14 @@ const initialStateFactory = (): LeaderboardStoreState => ({
 export const useLeaderboardStore = defineStore('leaderboard', {
   state: (): LeaderboardStoreState => initialStateFactory(),
   actions: {
-    fetchPnlLeaderboard,
-    fetchCompetitionLeaderboard,
+    // no-op placeholders to avoid runtime errors if referenced
+    async fetchPnlLeaderboard() { },
+    async fetchCompetitionLeaderboard() { },
 
-    async fetchHistoricalBalance(
-      resolution: HistoricalPortfolioDuration = HistoricalPortfolioDuration.OneWeek
-    ) {
-      const leaderboardStore = useLeaderboardStore()
-      const sharedWalletStore = useSharedWalletStore()
+    async fetchHistoricalBalance() { },
 
-      const { t, v } = await indexerGrpcArchiverApi.fetchHistoricalBalance({
-        account: sharedWalletStore.injectiveAddress,
-        resolution
-      })
+    async fetchHistoricalPnl() { },
 
-      const historicalBalance = t.map((time, index) => {
-        return {
-          time: time * 1000,
-          value: v[index]
-        }
-      })
-
-      leaderboardStore.$patch({
-        historicalBalance: historicalBalance.reverse()
-      })
-    },
-
-    async fetchHistoricalPnl(
-      resolution: HistoricalPortfolioDuration = HistoricalPortfolioDuration.OneWeek
-    ) {
-      const leaderboardStore = useLeaderboardStore()
-      const sharedWalletStore = useSharedWalletStore()
-
-      const { t, v } = await indexerGrpcArchiverApi.fetchHistoricalRpnl({
-        account: sharedWalletStore.injectiveAddress,
-        resolution
-      })
-
-      const historicalPnl = t.map((time, index) => {
-        return {
-          time: time * 1000,
-          value: v[index]
-        }
-      })
-
-      leaderboardStore.$patch({
-        historicalPnl: historicalPnl.reverse()
-      })
-    },
-
-    async fetchHistoricalVolume(
-      resolution: LeaderboardDuration = LeaderboardDuration.OneWeek
-    ) {
-      const leaderboardStore = useLeaderboardStore()
-      const sharedWalletStore = useSharedWalletStore()
-
-      const { t, v } = await indexerGrpcArchiverApi.fetchHistoricalVolumes({
-        account: sharedWalletStore.injectiveAddress,
-        resolution
-      })
-
-      const historicalVolume = t.map((time, index) => {
-        return {
-          time: time * 1000,
-          value: v[index]
-        }
-      })
-
-      leaderboardStore.$patch({
-        historicalVolume: historicalVolume.reverse()
-      })
-    }
+    async fetchHistoricalVolume() { }
   }
 })
