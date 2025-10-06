@@ -8,33 +8,19 @@ import {
 import type { MenuItem } from '@/types'
 
 export const getMoreMenu = () => [
-  {
-    label: 'navigation.swap',
-    to: { name: MainPage.Swap }
-  },
-  {
-    to: { name: MainPage.LpRewards },
-    label: 'navigation.more.lpRewards'
-  },
+  // Swap and LP Rewards removed in this build
   {
     isExternal: true,
     label: 'navigation.more.bridge',
     to: 'https://bridge.injective.network/'
   },
-  {
-    to: { name: MainPage.Vaults },
-    label: 'navigation.more.vaults'
-  },
+  // Vaults removed in this build
   {
     isExternal: true,
     label: 'navigation.more.olp',
     to: 'https://trading.injective.network/program/liquidity/'
   },
-  {
-    isConnectedOnly: true,
-    to: { name: MainPage.Points },
-    label: 'navigation.points'
-  },
+  // Points removed in this build
   {
     isDesktopOnly: true,
     isConnectedOnly: true,
@@ -55,10 +41,7 @@ export const TRADING_OPTIONS = [
       params: { slug: 'inj-usdt' }
     }
   },
-  {
-    label: 'navigation.tradingBots',
-    to: { name: MainPage.TradingBots }
-  },
+  // Trading bots removed in this build
   {
     label: 'navigation.stocks',
     to: { name: TradeSubPage.Stocks }
