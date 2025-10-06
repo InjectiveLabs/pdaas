@@ -58,20 +58,12 @@ const gridStrategyStore = useGridStrategyStore()
     </div>
 
     <div class="flex gap-4 mt-4">
-      <NuxtLink :to="{ name: MainPage.TradingBotsLiquidityBotsSpot }">
-        <AppButton size="lg">
-          {{ $t('tradingBots.createYourStrategy') }}
-        </AppButton>
-      </NuxtLink>
-
-      <NuxtLink
-        to="https://docs.helixapp.com/advanced/trading-bots"
-        target="_blank"
-      >
-        <AppButton variant="primary-outline" class="border-white" size="lg">
-          {{ $t('common.learnMore') }}
-        </AppButton>
-      </NuxtLink>
+      <AppButton size="lg" disabled>
+        {{ $t('tradingBots.createYourStrategy') }}
+      </AppButton>
+      <AppButton variant="primary-outline" class="border-white" size="lg" disabled>
+        {{ $t('common.learnMore') }}
+      </AppButton>
     </div>
   </div>
 </template>
