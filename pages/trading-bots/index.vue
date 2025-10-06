@@ -1,30 +1,14 @@
 <script setup lang="ts">
-import { Status, StatusType } from '@injectivelabs/utils'
-
-const gridStrategyStore = useGridStrategyStore()
-
-const status = reactive(new Status(StatusType.Loading))
-
-const { $onError } = useNuxtApp()
-
-onMounted(() => {
-  status.setLoading()
-
-  Promise.all([gridStrategyStore.fetchStrategyStats()])
-    .catch($onError)
-    .finally(() => {
-      status.setIdle()
-    })
-})
+// Trading Bots have been disabled in this build.
 </script>
 
 <template>
-  <UContainer class="py-8">
-    <PartialsTradingBotsHomepageHero />
-    <PartialsTradingBotsHomepageMyActiveBots class="mt-10" />
-
-    <PartialsTradingBotsHomepageMyLpRewards class="mt-10" />
-
-    <PartialsTradingBotsHomepageShowcase class="mt-10" />
+  <UContainer class="py-16">
+    <div class="text-center py-24">
+      <h1 class="text-4xl lg:text-6xl font-bold">Trading Bots Unavailable</h1>
+      <p class="text-lg mt-4">This feature is not available in this build.</p>
+      <NuxtLink class="btn btn-primary mt-8" to="/trade">Go to Trade</NuxtLink>
+    </div>
   </UContainer>
+  
 </template>

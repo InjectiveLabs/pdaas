@@ -17,24 +17,12 @@ const options = computed(() => [
   {
     value: TradingInterface.Standard,
     disabled: false
-  },
-  {
-    value: TradingInterface.TradingBots,
-    disabled:
-      jsonStore.spotGridMarkets.find(
-        ({ slug }) => slug === spotMarket.value.slug
-      ) === undefined
   }
 ])
 
 onMounted(() => {
-  if (
-    queryTradingMode.value === TradingInterface.TradingBots &&
-    options.value.find(({ value }) => value === TradingInterface.TradingBots)
-      ?.disabled
-  ) {
-    queryTradingMode.value = TradingInterface.Standard
-  }
+  // Force Standard mode; Trading Bots is disabled in this build
+  queryTradingMode.value = TradingInterface.Standard
 })
 </script>
 
@@ -57,11 +45,7 @@ onMounted(() => {
     </div>
 
     <div>
-      <PartialsTradeSpotFormStandard
-        v-if="queryTradingMode === TradingInterface.Standard"
-      />
-
-      <PartialsTradeSpotFormTradingBots v-else />
+      <PartialsTradeSpotFormStandard />
     </div>
   </div>
 </template>
