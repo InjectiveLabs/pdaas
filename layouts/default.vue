@@ -185,7 +185,6 @@ watch(
     </template>
 
     <LayoutFooter v-if="showFooter" />
-    <LayoutStatusBar />
 
     <div id="modals" />
 

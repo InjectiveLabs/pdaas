@@ -1,12 +1,12 @@
 export default {
   home: {
-    openFinance: 'Open Finance',
+    openFinance: 'Perp DEX as a Service',
     description:
-      'Secure, fast, gas-free on-chain trading with institutional liquidity',
+      'Fully on-chain order book, matching, and settlement. Liquidity included. Ready within minutes.',
 
     gasFees: 'Gas Fees',
     whyHelix: 'Why Helix?',
-    reimagined: 'Reimagined',
+    reimagined: '',
     latestNews: 'Latest News',
     totalVolume: 'Total Volume',
     totalMarkets: 'Total Markets',
