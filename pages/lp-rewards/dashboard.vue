@@ -1,0 +1,63 @@
+<script setup lang="ts">
+import { LiquidityRewardsPage } from '@/types'
+import type { Campaign } from '@injectivelabs/sdk-ts'
+
+const router = useRouter()
+const campaignStore = useCampaignStore()
+const sharedWalletStore = useSharedWalletStore()
+
+const campaignsByRound = computed(() => {
+  const campaignsMap = campaignStore.campaignsWithUserRewards.reduce(
+    (campaigns, campaign) => {
+      const round = campaign.roundId
+
+      if (!campaigns[round]) {
+        campaigns[round] = []
+      }
+
+      campaigns[round].push(campaign)
+
+      return campaigns
+    },
+    {} as Record<number, Campaign[]>
+  )
+
+  return [...Object.entries(campaignsMap)].reverse()
+})
+
+const activeRound = computed(() =>
+  Math.max(...campaignStore.round.map(({ roundId }) => roundId))
+)
+
+watch(
+  () => sharedWalletStore.isUserConnected,
+  (isConnected) => {
+    if (!isConnected) {
+      router.replace({ name: LiquidityRewardsPage.Home })
+    }
+  },
+  { immediate: true }
+)
+</script>
+
+<template>
+  <div class="max-w-7xl mx-auto w-full py-6 px-2">
+    <PartialsLiquidityDashboardHeader />
+
+    <h3 class="text-lg font-semibold my-6">
+      {{
+        $t('lpRewards.myRewardsCount', {
+          rewards: campaignStore.campaignsWithUserRewards.length
+        })
+      }}
+    </h3>
+
+    <div class="space-y-4">
+      <PartialsLiquidityDashboardRound
+        v-for="[round, campaigns] in campaignsByRound"
+        v-bind="{ round: Number(round), campaigns, activeRound }"
+        :key="round"
+      />
+    </div>
+  </div>
+</template>
