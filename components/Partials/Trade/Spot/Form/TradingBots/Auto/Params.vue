@@ -1,0 +1,256 @@
+<script setup lang="ts">
+import { ZERO_IN_BASE } from '@shared/utils/constant'
+import { BigNumberInBase } from '@injectivelabs/utils'
+import { pricesToEma } from '@/app/utils/helpers'
+import {
+  GST_STABLE_GRIDS,
+  SGT_STABLE_COINS,
+  GST_DEFAULT_AUTO_GRIDS,
+  GST_STABLE_LOWER_PERCENTAGE,
+  GST_STABLE_UPPER_PERCENTAGE,
+  UI_DEFAULT_MIN_DISPLAY_DECIMALS
+} from '@/app/utils/constants'
+import {
+  MarketKey,
+  GridStrategyType,
+  InvestmentTypeGst,
+  SpotGridTradingField,
+  SpotTradingBotsCyTags
+} from '@/types'
+import type { UiMarketWithToken, SpotGridTradingForm } from '@/types'
+
+const emit = defineEmits<{
+  'update:tab': [GridStrategyType]
+}>()
+
+const LOWER_BOUND_PERCENTAGE = 0.94
+const UPPER_BOUND_PERCENTAGE = 1.06
+const SMOOTHING = 3
+
+const market = inject(MarketKey) as Ref<UiMarketWithToken>
+
+const exchangeStore = useExchangeStore()
+const setFormValues = useSetFormValues()
+const spotGridFormValues = useFormValues<SpotGridTradingForm>()
+
+const isAssetRebalancingChecked = ref(true)
+
+const { lastTradedPrice } = useSpotLastPrice(computed(() => market.value))
+
+const decimalPlaces = computed(() => {
+  return market.value.priceDecimals
+})
+
+const marketUsesStableCoins = computed(() =>
+  [market.value?.baseToken.symbol, market.value?.quoteToken.symbol].some(
+    (symbol) => symbol && SGT_STABLE_COINS.includes(symbol.toLowerCase())
+  )
+)
+
+const upperEma = computed(() => {
+  const marketHistory = exchangeStore.marketsHistory.find(
+    (m) => m.marketId === market.value.marketId
+  )
+
+  if (!marketHistory) {
+    return lastTradedPrice.value.toNumber() * UPPER_BOUND_PERCENTAGE
+  }
+
+  return (
+    Math.max(
+      ...pricesToEma(
+        marketHistory.highPrice,
+        marketHistory.highPrice.length / SMOOTHING
+      )
+    ) * UPPER_BOUND_PERCENTAGE
+  )
+})
+
+const lowerEma = computed(() => {
+  const marketHistory = exchangeStore.marketsHistory.find(
+    (m) => m.marketId === market.value.marketId
+  )
+
+  if (!marketHistory) {
+    return lastTradedPrice.value.toNumber() * LOWER_BOUND_PERCENTAGE
+  }
+
+  return (
+    Math.min(
+      ...pricesToEma(
+        marketHistory.lowPrice,
+        marketHistory.highPrice.length / SMOOTHING
+      )
+    ) * LOWER_BOUND_PERCENTAGE
+  )
+})
+
+const upperPrice = computed(() => {
+  if (marketUsesStableCoins.value) {
+    return lastTradedPrice.value
+      .times(GST_STABLE_UPPER_PERCENTAGE)
+      .toFixed(decimalPlaces.value)
+  }
+
+  const isSingleSided =
+    spotGridFormValues.value[SpotGridTradingField.InvestmentType] !==
+    InvestmentTypeGst.BaseAndQuote
+
+  if (
+    !isAssetRebalancingChecked.value &&
+    isSingleSided &&
+    spotGridFormValues.value[SpotGridTradingField.InvestmentType] ===
+      InvestmentTypeGst.Base
+  ) {
+    return lastTradedPrice.value.times(2).toFixed(decimalPlaces.value)
+  }
+
+  if (
+    !isAssetRebalancingChecked.value &&
+    isSingleSided &&
+    spotGridFormValues.value[SpotGridTradingField.InvestmentType] ===
+      InvestmentTypeGst.Quote
+  ) {
+    return lastTradedPrice.value
+      .minus(lastTradedPrice.value.times(0.06))
+      .toFixed(decimalPlaces.value)
+  }
+
+  return upperEma.value.toFixed(decimalPlaces.value)
+})
+
+const lowerPrice = computed(() => {
+  if (marketUsesStableCoins.value) {
+    return lastTradedPrice.value
+      .times(GST_STABLE_LOWER_PERCENTAGE)
+      .toFixed(decimalPlaces.value)
+  }
+
+  const isSingleSided =
+    spotGridFormValues.value[SpotGridTradingField.InvestmentType] !==
+    InvestmentTypeGst.BaseAndQuote
+
+  if (
+    !isAssetRebalancingChecked.value &&
+    isSingleSided &&
+    spotGridFormValues.value[SpotGridTradingField.InvestmentType] ===
+      InvestmentTypeGst.Base
+  ) {
+    return lastTradedPrice.value
+      .plus(lastTradedPrice.value.times(0.06))
+      .toFixed(decimalPlaces.value)
+  }
+
+  if (
+    !isAssetRebalancingChecked.value &&
+    isSingleSided &&
+    spotGridFormValues.value[SpotGridTradingField.InvestmentType] ===
+      InvestmentTypeGst.Quote
+  ) {
+    return lastTradedPrice.value.times(0.5).toFixed(decimalPlaces.value)
+  }
+
+  return lowerEma.value.toFixed(decimalPlaces.value)
+})
+
+const grids = computed(() =>
+  marketUsesStableCoins.value ? GST_STABLE_GRIDS : GST_DEFAULT_AUTO_GRIDS
+)
+
+const profitPerGrid = computed(() => {
+  if (!lowerPrice.value || !upperPrice.value || !grids.value) {
+    return ZERO_IN_BASE
+  }
+
+  const priceDifference = new BigNumberInBase(upperPrice.value)
+    .minus(lowerPrice.value)
+    .dividedBy(grids.value)
+
+  return priceDifference.dividedBy(lowerPrice.value).times(100)
+})
+
+watch(
+  () => [upperPrice.value, lowerPrice.value, grids.value],
+  () => {
+    setValuesFromAuto()
+  },
+  {
+    immediate: true
+  }
+)
+
+function setValuesFromAuto() {
+  setFormValues(
+    {
+      [SpotGridTradingField.UpperPrice]: upperPrice.value,
+      [SpotGridTradingField.LowerPrice]: lowerPrice.value,
+      [SpotGridTradingField.Grids]: grids.value.toString()
+    },
+    false
+  )
+}
+
+function copyToManual() {
+  emit('update:tab', GridStrategyType.Manual)
+}
+
+onMounted(() => {
+  setValuesFromAuto()
+})
+</script>
+
+<template>
+  <div class="border-b pb-4 mb-6">
+    <div class="text-xs space-y-2 pt-4 pb-2 leading-4">
+      <p class="text-white">{{ $t('tradingBots.autoModeHeader') }}</p>
+      <div>
+        <a
+          class="text-blue-500 border border-b border-b-blue-500"
+          href="https://helixapp.zendesk.com/hc/en-us/articles/8057142539023-Spot-Grid-Trading-on-Helix"
+          target="_blank"
+        >
+          {{ $t('common.learnMore') }}
+        </a>
+      </div>
+    </div>
+
+    <div class="text-xs text-coolGray-450 space-y-4 py-4">
+      <div class="flex justify-between">
+        <p>{{ $t('tradingBots.lowerPrice') }}</p>
+        <p class="text-coolGray-450">
+          <span class="text-white">{{ lowerPrice }}</span> USDT
+        </p>
+      </div>
+
+      <div class="flex justify-between">
+        <p>{{ $t('tradingBots.upperPrice') }}</p>
+        <p class="text-coolGray-450">
+          <span class="text-white">{{ upperPrice }}</span> USDT
+        </p>
+      </div>
+
+      <div class="flex justify-between">
+        <p>{{ $t('tradingBots.gridNumber') }}</p>
+        <p class="text-white">{{ grids }}</p>
+      </div>
+
+      <div class="flex justify-between">
+        <p>{{ $t('tradingBots.profitGrid') }}</p>
+        <p class="text-white">
+          <SharedAmount
+            v-bind="{
+              useSubscript: true,
+              amount: profitPerGrid,
+              shouldAbbreviate: false,
+              decimals: UI_DEFAULT_MIN_DISPLAY_DECIMALS
+            }"
+          />%
+        </p>
+      </div>
+    </div>
+
+    <button class="text-blue-550 text-xs" @click="copyToManual">
+      {{ $t('tradingBots.copyParametersToManual') }}
+    </button>
+  </div>
+</template>

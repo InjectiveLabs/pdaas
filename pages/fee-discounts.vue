@@ -1,0 +1,72 @@
+<script lang="ts" setup>
+import { Status, StatusType } from '@injectivelabs/utils'
+
+const exchangeStore = useExchangeStore()
+const sharedParamStore = useSharedParamStore()
+const sharedWalletStore = useSharedWalletStore()
+const { $onError } = useNuxtApp()
+
+const status = reactive(new Status(StatusType.Loading))
+
+onMounted(() => {
+  Promise.all([
+    sharedParamStore.init(),
+    exchangeStore.fetchParams(),
+    exchangeStore.fetchFeeDiscountSchedule(),
+    exchangeStore.fetchFeeDiscountAccountInfo()
+  ])
+    .catch($onError)
+    .finally(() => {
+      status.setIdle()
+    })
+})
+</script>
+
+<template>
+  <AppHocLoading :status="status" is-full-screen>
+    <div class="fee-discounts min-h-screen-excluding-header-and-footer">
+      <div class="container mx-auto">
+        <div class="w-full mx-auto xl:w-4/5 mt-6 max-xl:px-4">
+          <h3 class="text-xl font-bold text-coolGray-200">
+            {{ $t(`feeDiscounts.pageTitle`) }}
+          </h3>
+          <div class="mt-6 mb-8">
+            <p class="text-sm font-normal mb-2">
+              {{ $t('feeDiscounts.pageDescription') }}
+            </p>
+            <p class="text-sm text-blue-500 font-normal">
+              {{ $t('feeDiscounts.pageDescriptionWarning') }}
+            </p>
+          </div>
+
+          <div v-if="sharedWalletStore.isUserConnected" class="mb-8">
+            <PartialsFeeDiscountsOverview />
+          </div>
+
+          <AppPanel>
+            <PartialsFeeDiscounts />
+          </AppPanel>
+        </div>
+      </div>
+    </div>
+  </AppHocLoading>
+</template>
+
+<style scoped>
+.fee-discounts {
+  background: url('@/assets/fee-discounts-background-mobile.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  padding-top: 2rem;
+}
+
+@media (min-width: 480px) {
+  .fee-discounts {
+    background: url('@/assets/fee-discounts-background.svg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+}
+</style>

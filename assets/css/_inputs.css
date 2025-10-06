@@ -1,0 +1,39 @@
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+.input-wrapper {
+  @apply shadow-sm bg-coolGray-950 rounded;
+}
+
+.input {
+  @apply border border-transparent bg-coolGray-950 shadow-sm text-coolGray-200 rounded w-full h-10 outline-none appearance-none max-w-full;
+}
+
+.input-small {
+  @apply h-8;
+}
+
+.input::placeholder {
+  @apply opacity-75;
+}
+
+.input[disabled] {
+  @apply pointer-events-none cursor-not-allowed bg-coolGray-700;
+}
+
+.is-valid .input {
+  @apply border-blue-500;
+}
+
+.is-invalid .input {
+  @apply border-red-400;
+}
+
+.no-shadow .input {
+  @apply border-transparent shadow-none;
+}
+
+.input-bg-transparent {
+  background-color: transparent !important;
+}
