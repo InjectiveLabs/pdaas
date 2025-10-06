@@ -16,6 +16,16 @@ _Perp Dex As A Service - Powered by Injective_
 
 This repository is self‑contained and vendors the shared `injective-ui` layer, so you can run it without fetching external layers.
 
+> Prerequisites
+>
+> - Node 20 LTS
+>   - nvm: `nvm install 20 && nvm use 20` (auto‑selected via `.nvmrc`)
+>   - asdf: `asdf install` (reads `.tool-versions`/`.node-version`), then `asdf local nodejs 20`
+>   - Volta: `curl https://get.volta.sh | bash && volta install node@20`
+> - Yarn Classic (v1)
+>   - Using Corepack (recommended): `corepack enable && corepack prepare yarn@1.22.22 --activate`
+>   - Or install globally: `npm i -g yarn@1.22.22`
+
 1. Clone the repository
 
 ```bash

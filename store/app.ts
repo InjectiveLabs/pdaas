@@ -26,7 +26,7 @@ import {
   TradingChartInterval
 } from '@/types'
 import type { Modal, HelixCtaToast } from '@/types'
-import type { ChainId, EthereumChainId } from '@injectivelabs/ts-types'
+import type { ChainId, EvmChainId as EthereumChainId } from '@injectivelabs/ts-types'
 
 export interface UserBasedState {
   modalsViewed: Modal[]
@@ -150,7 +150,7 @@ export const useAppStore = defineStore('app', {
       const appStore = useAppStore()
 
       appStore.$patch({
-        gasPrice: await fetchGasPrice(NETWORK, { alchemyKey })
+        gasPrice: await fetchGasPrice()
       })
     },
 

@@ -4,6 +4,9 @@
   "description": "The Premier Decentralized Crypto Exchange",
   "license": "Apache-2.0",
   "author": "@InjectiveLabs",
+  "engines": {
+    "node": ">=20 <23"
+  },
   "private": true,
   "browser": {
     "buffer": true
