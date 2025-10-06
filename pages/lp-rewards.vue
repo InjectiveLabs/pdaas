@@ -1,35 +1,13 @@
 <script setup lang="ts">
-import { Status, StatusType } from '@injectivelabs/utils'
-
-const campaignStore = useCampaignStore()
-const gridStrategyStore = useGridStrategyStore()
-
-const { $onError } = useNuxtApp()
-
-const round = useQueryRef('round', '')
-
-const status = reactive(new Status(StatusType.Idle))
-
-onWalletConnected(() => {
-  status.setLoading()
-
-  const roundId = round.value ? Number(round.value) : undefined
-
-  Promise.all([
-    campaignStore.fetchRound(roundId),
-    gridStrategyStore.fetchAllStrategies()
-  ])
-    .catch($onError)
-    .finally(() => {
-      status.setIdle()
-    })
-})
+// LP Rewards disabled in this build.
 </script>
 
 <template>
-  <AppHocLoading v-bind="{ status }" is-full-screen>
-    <div class="mb-40">
-      <NuxtPage />
+  <UContainer class="py-16">
+    <div class="text-center py-24">
+      <h1 class="text-4xl lg:text-6xl font-bold">LP Rewards Unavailable</h1>
+      <p class="text-lg mt-4">This feature is not available in this build.</p>
+      <NuxtLink class="btn btn-primary mt-8" to="/markets">Go to Markets</NuxtLink>
     </div>
-  </AppHocLoading>
+  </UContainer>
 </template>
