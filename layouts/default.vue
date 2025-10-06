@@ -139,7 +139,7 @@ watch(
     <div :id="TURNKEY_CONTAINER_ID" class="opacity-0 h-0" />
     <LayoutNavbar />
 
-    <PartialsHomeGradientBg v-if="route.name === MainPage.Index" />
+    
     <LayoutBanner class="sticky top-[56px]" />
 
     <AppHocLoading
