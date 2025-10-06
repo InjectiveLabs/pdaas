@@ -1,8 +1,8 @@
-# 🌟 Injective Helix
+# 🌟 PDAAS
 
-_Helix | The Premier Decentralized Spot and Derivatives Exchange_
+_Powered by Injective — Decentralized Spot and Derivatives Exchange UI_
 
-[Get a taste of the UI](https://helixapp.com)
+![Injective Logo](public/icon.svg)
 
 ## ✨ Features
 
@@ -44,15 +44,15 @@ Notes:
 
 ## 📖 Documentation
 
-The `injective-helix` UI is built using Nuxt and TailwindCSS and is powered by the [injective-ts monorepo](https://github.com/InjectiveLabs/injective-ts/). This repo vendors the shared `injective-ui` layer for a smooth, self‑contained local development experience while retaining upstream Injective compatibility.
+This project is built using Nuxt and TailwindCSS and is powered by the [injective-ts monorepo](https://github.com/InjectiveLabs/injective-ts/). It vendors the shared `injective-ui` layer for a smooth, self‑contained local development experience while retaining upstream Injective compatibility.
 
-You can always boot the dex locally on your own laptop without having to set up a relayer. You can use the `public` network in your `VITE_NETWORK` `.env` configuration variable and run the `yarn run dev` command. You can find all of the available networks (i.e - predefined set of endpoints) [here](https://github.com/InjectiveLabs/injective-ts/blob/17b1aa5df39d5724baf6262b276980cf722a1cba/packages/networks/src/types.ts#L1). Using these endpoints (from the `public`) network gives the 40% of the trading fees to the community spend pool.
+You can run the app locally without having to set up a relayer. Use the `public` network in your `VITE_NETWORK` `.env` configuration variable and run `yarn dev`. You can find available networks (predefined endpoint sets) [here](https://github.com/InjectiveLabs/injective-ts/blob/17b1aa5df39d5724baf6262b276980cf722a1cba/packages/networks/src/types.ts#L1). Using these endpoints (from the `public` network) gives 40% of trading fees to the community spend pool.
 
 ### Deployment
 
-The `injective-helix` uses AWS for deployment. There is a CD pipeline set in the `.github/workflow/mainnet.yml` file. Deployment to AWS is done to a S3 bucket which is served through Cloudfront to the end user. Using `yarn generate` we are generating static html pages that are served through cloud front.
+You can deploy this Nuxt 3 app using your preferred provider (Vercel, Netlify, Cloudflare Pages, or AWS S3/CloudFront). For static sites, use `yarn generate`; for server rendering, use `nuxi build` and your platform's adapter.
 
-More details about how to deploy a Nuxt project can be found on their docs.
+See the official Nuxt docs for deployment guides.
 
 ### Nuxt3
 
@@ -70,15 +70,15 @@ Reach out to us at one of the following places!
 - Twitter at <a href="https://twitter.com/InjectiveLabs" target="_blank">`@InjectiveLabs`</a>
 - Discord at <a href="https://discord.com/invite/NK4qdbv" target="_blank">`Injective Discord`</a>
 - Telegram at <a href="https://t.me/joininjective" target="_blank">`Injective Telegram`</a>
-- Telegram at <a href="https://t.me/helixapp" target="_blank">`Helix Telegram`</a>
+
 
 ---
 
 ## 🔓 License
 
-Copyright © 2021 - 2024 Injective Foundation (https://injectivelabs.org/)
+Copyright © 2021 - 2025 Injective Foundation (https://injectivelabs.org/)
 
-<a href="https://iili.io/mNneZN.md.png"><img src="https://iili.io/mNneZN.md.png" style="width: 300px; max-width: 100%; height: auto" />
+<img src="public/icon.svg" alt="Injective" style="width: 120px; max-width: 100%; height: auto" />
 
 Originally released by Injective Foundation under: <br />
 Apache License <br />
