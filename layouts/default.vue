@@ -15,7 +15,6 @@ const route = useRoute()
 const authZStore = useAuthZStore()
 const jsonStore = useSharedJsonStore()
 const accountStore = useAccountStore()
-const referralStore = useReferralStore()
 const positionStore = usePositionStore()
 const exchangeStore = useExchangeStore()
 const sharedSpotStore = useSharedSpotStore()
@@ -51,7 +50,6 @@ onWalletConnected(async () => {
 
   Promise.all([
     fetchUserPortfolio(),
-    referralStore.fetchUserReferrer(),
     sharedSpotStore.fetchMarketsSummary(),
     sharedDerivativeStore.fetchMarketsSummary()
   ])

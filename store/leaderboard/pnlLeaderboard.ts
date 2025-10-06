@@ -1,19 +1,11 @@
-import { indexerGrpcArchiverApi } from '@/app/Services'
-import { LeaderboardType } from '@/types'
+// Disabled leaderboard data fetchers
+import type { LeaderboardType } from '@/types'
 
 export const fetchPnlLeaderboard = async (
   resolution: string,
   account?: string
 ) => {
-  const leaderboardStore = useLeaderboardStore()
-
-  leaderboardStore.$patch({
-    pnlLeaderboard:
-      await indexerGrpcArchiverApi.fetchPnlLeaderboardFixedResolution({
-        account,
-        resolution
-      })
-  })
+  return
 }
 
 export const fetchCompetitionLeaderboard = async ({
@@ -21,32 +13,12 @@ export const fetchCompetitionLeaderboard = async ({
   account,
   duration
 }: {
-  type: LeaderboardType
   account?: string
+  type: LeaderboardType
   duration: {
-    startDate: string
     endDate: string
+    startDate: string
   }
 }) => {
-  const leaderboardStore = useLeaderboardStore()
-
-  if (type === LeaderboardType.Pnl) {
-    leaderboardStore.$patch({
-      competitionLeaderboard: await indexerGrpcArchiverApi.fetchPnlLeaderboard({
-        account,
-        endDate: duration.endDate,
-        startDate: duration.startDate
-      })
-    })
-
-    return
-  }
-
-  leaderboardStore.$patch({
-    competitionLeaderboard: await indexerGrpcArchiverApi.fetchVolLeaderboard({
-      account,
-      endDate: duration.endDate,
-      startDate: duration.startDate
-    })
-  })
+  return
 }

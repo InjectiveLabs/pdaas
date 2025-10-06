@@ -1,8 +1,6 @@
 import { defineStore } from 'pinia'
 import { ZERO_IN_BASE } from '@shared/utils/constant'
 import { FEE_RECIPIENT } from '@/app/utils/constants'
-import { indexerGrpcReferralApi } from '@/app/Services'
-import { registerInvitee, createReferralLink } from '@/store/referral/message'
 import type { ReferralDetails } from '@injectivelabs/sdk-ts'
 
 type ReferralStoreState = {
@@ -28,60 +26,14 @@ export const useReferralStore = defineStore('referral', {
     hasBeenReferred: (state) => state.feeRecipient !== FEE_RECIPIENT
   },
   actions: {
-    registerInvitee,
-    createReferralLink,
+    // Disable all referral actions in this build
+    async registerInvitee() { },
+    async createReferralLink() { },
 
-    async checkCodeAvailability(referralCode: string) {
-      try {
-        const response =
-          await indexerGrpcReferralApi.fetchReferrerByCode(referralCode)
+    async checkCodeAvailability() { return '' },
 
-        return response
-      } catch {
-        return ''
-      }
-    },
+    async fetchUserReferrer() { const referralStore = useReferralStore(); referralStore.$patch({ feeRecipient: FEE_RECIPIENT }) },
 
-    async fetchUserReferrer() {
-      const referralStore = useReferralStore()
-      const sharedWalletStore = useSharedWalletStore()
-
-      try {
-        if (!sharedWalletStore.injectiveAddress) {
-          return
-        }
-
-        const response = await indexerGrpcReferralApi.fetchInviteeDetails(
-          sharedWalletStore.authZOrInjectiveAddress
-        )
-
-        referralStore.$patch({
-          feeRecipient: response?.active ? response.referrer : FEE_RECIPIENT
-        })
-      } catch {
-        // silent error handling if user has no referrer
-        referralStore.$patch({ feeRecipient: FEE_RECIPIENT })
-      }
-    },
-
-    async fetchUserReferralDetails() {
-      const referralStore = useReferralStore()
-      const sharedWalletStore = useSharedWalletStore()
-
-      try {
-        if (!sharedWalletStore.injectiveAddress) {
-          return
-        }
-
-        const response = await indexerGrpcReferralApi.fetchReferrerDetails(
-          sharedWalletStore.authZOrInjectiveAddress
-        )
-
-        referralStore.$patch({ referralDetails: response || {} })
-      } catch {
-        // silent error handling if user is not an invitee
-        referralStore.$patch({ referralDetails: {} })
-      }
-    }
+    async fetchUserReferralDetails() { const referralStore = useReferralStore(); referralStore.$patch({ referralDetails: { invitees: [], referrerCode: '', referrerAddress: '', totalCommission: ZERO_IN_BASE, totalTradingVolume: ZERO_IN_BASE } as any }) }
   }
 })
