@@ -12,6 +12,7 @@
     "buffer": true
   },
   "scripts": {
+    "setup": "node -e \"require('child_process').execSync(process.platform === 'win32' ? 'powershell -ExecutionPolicy Bypass -File ./setup.ps1' : 'bash ./setup.sh', {stdio: 'inherit'})\"",
     "fetch:data": "ts-node -P tsconfig-script.json ./scripts/marketMap.ts && ts-node -P tsconfig-script.json ./scripts/tokens.ts && ts-node -P tsconfig-script.json ./scripts/restriction.ts && ts-node -P tsconfig-script.json ./scripts/swap.ts && ts-node -P tsconfig-script.json ./scripts/denom.ts",
     "github:version": "ts-node -P tsconfig-script.json ./scripts/github.ts",
     "dev": "nuxi dev",
