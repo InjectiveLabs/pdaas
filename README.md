@@ -16,6 +16,51 @@ _Perp Dex As A Service - Powered by Injective_
 
 This repository is self‑contained and vendors the shared `injective-ui` layer, so you can run it without fetching external layers.
 
+### 🚀 One-Click Setup (Recommended)
+
+Clone the repo and run the setup script - it handles everything automatically!
+
+**macOS / Linux:**
+```bash
+git clone git@github.com:InjectiveLabs/pdaas.git
+cd pdaas
+./setup.sh
+```
+
+**Windows (PowerShell):**
+```powershell
+git clone git@github.com:InjectiveLabs/pdaas.git
+cd pdaas
+.\setup.ps1
+```
+
+**Alternative (if you already have Node.js installed):**
+```bash
+git clone git@github.com:InjectiveLabs/pdaas.git
+cd pdaas
+npm run setup
+```
+
+The setup script will:
+- ✓ Check and install Node.js 20 (if needed)
+- ✓ Check and install Yarn Classic (if needed)
+- ✓ Copy `.env.example` to `.env`
+- ✓ Install all dependencies
+- ✓ Get you ready to code!
+
+Then just run:
+```bash
+yarn dev
+```
+
+🎉 **That's it!** Your dev server will be running at `http://127.0.0.1:3000`
+
+---
+
+### 📖 Manual Setup (Advanced)
+
+If you prefer to set things up manually or want more control:
+
 ### Prerequisites
 
 #### 1. Install Node.js 20 LTS
