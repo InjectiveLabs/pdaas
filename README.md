@@ -16,40 +16,176 @@ _Perp Dex As A Service - Powered by Injective_
 
 This repository is self‑contained and vendors the shared `injective-ui` layer, so you can run it without fetching external layers.
 
-> Prerequisites
->
-> - Node 20 LTS
->   - nvm: `nvm install 20 && nvm use 20` (auto‑selected via `.nvmrc`)
->   - asdf: `asdf install` (reads `.tool-versions`/`.node-version`), then `asdf local nodejs 20`
->   - Volta: `curl https://get.volta.sh | bash && volta install node@20`
-> - Yarn Classic (v1)
->   - Using Corepack (recommended): `corepack enable && corepack prepare yarn@1.22.22 --activate`
->   - Or install globally: `npm i -g yarn@1.22.22`
+### Prerequisites
+
+#### 1. Install Node.js 20 LTS
+
+**First, check if you already have Node.js:**
+```bash
+node --version
+```
+
+If you see a version number starting with `v20.x.x`, you're good! Skip to step 2.
+
+If you see `command not found` or a different version, install Node.js 20 using one of these methods:
+
+<details>
+<summary><strong>Method 1: Direct Download (easiest for beginners)</strong></summary>
+
+1. Visit [nodejs.org/download](https://nodejs.org/en/download/)
+2. Download the **LTS version 20.x** installer for your operating system:
+   - **macOS:** Download the `.pkg` file and run it
+   - **Windows:** Download the `.msi` file and run it
+   - **Linux:** Use your package manager or download the binary
+3. Follow the installation wizard (accept defaults)
+4. Verify installation:
+   ```bash
+   node --version
+   # Should output: v20.x.x
+   ```
+   ```bash
+   npm --version
+   # Should output: 10.x.x (npm comes with Node.js)
+   ```
+
+</details>
+
+<details>
+<summary><strong>Method 2: Using nvm (recommended for developers - macOS/Linux)</strong></summary>
+
+nvm lets you easily switch between Node.js versions.
+
+1. Install nvm:
+   ```bash
+   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+   ```
+2. Close and reopen your terminal, then run:
+   ```bash
+   nvm install 20
+   nvm use 20
+   ```
+3. Verify:
+   ```bash
+   node --version
+   # Should output: v20.x.x
+   ```
+
+</details>
+
+<details>
+<summary><strong>Method 3: Using asdf (for multi-language version management)</strong></summary>
+
+```bash
+# Install asdf first if you don't have it
+git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.14.0
+
+# Add to your shell profile (~/.bashrc, ~/.zshrc, etc.)
+echo '. "$HOME/.asdf/asdf.sh"' >> ~/.zshrc
+
+# Restart terminal, then install Node.js
+asdf plugin add nodejs
+asdf install nodejs 20
+asdf local nodejs 20
+```
+
+</details>
+
+<details>
+<summary><strong>Method 4: Using Volta (cross-platform version manager)</strong></summary>
+
+```bash
+# Install Volta
+curl https://get.volta.sh | bash
+
+# Restart terminal, then install Node.js
+volta install node@20
+```
+
+</details>
+
+#### 2. Install Yarn Classic (v1.22.22)
+
+**First, check if you already have Yarn:**
+```bash
+yarn --version
+```
+
+If you see a version starting with `1.x.x`, you're good! Skip to Installation.
+
+If you see `command not found` or version `2.x`/`3.x`/`4.x`, install Yarn Classic:
+
+<details>
+<summary><strong>Method 1: Using Corepack (recommended - built into Node.js 16.9+)</strong></summary>
+
+```bash
+# Enable Corepack
+corepack enable
+
+# Install Yarn 1.22.22
+corepack prepare yarn@1.22.22 --activate
+
+# Verify
+yarn --version
+# Should output: 1.22.22
+```
+
+> **Note:** If `corepack enable` fails with permission errors, try `sudo corepack enable` (macOS/Linux) or run as Administrator (Windows).
+
+</details>
+
+<details>
+<summary><strong>Method 2: Using npm (if Corepack doesn't work)</strong></summary>
+
+```bash
+# Install globally
+npm install -g yarn@1.22.22
+
+# Verify
+yarn --version
+# Should output: 1.22.22
+```
+
+> **Note:** If you get permission errors on macOS/Linux, try `sudo npm install -g yarn@1.22.22`
+
+</details>
+
+### Installation
 
 1. Clone the repository
 
 ```bash
 git clone git@github.com:InjectiveLabs/pdaas.git
 cd pdaas
+```
+
+2. Install dependencies
+
+```bash
 yarn
 ```
 
-2. Optional: copy environment variables template and adjust values
+> **Note:** If you get `yarn: command not found`, go back to the Prerequisites section above and install Yarn.
+
+3. Copy environment variables template and configure for local development
 
 ```bash
 cp .env.example .env
 ```
 
-3. Run the app locally (uses the vendored Injective UI layer)
+Edit `.env` and set your configuration. The vendored `injective-ui` layer is used by default (`LOCAL_LAYER=true`).
+
+4. Run the app locally
 
 ```bash
-LOCAL_LAYER=true PORT=3000 HOST=0.0.0.0 yarn dev
+yarn dev
 ```
 
-Notes:
-- `LOCAL_LAYER=true` forces Nuxt to use the vendored `injective-ui` layer in this repo instead of fetching `github:InjectiveLabs/injective-ui/layer#master`.
-- You can omit `PORT`/`HOST` if you prefer defaults; they are shown here to bind on `http://localhost:3000`.
-- If you previously saw “Cannot extend config from github:InjectiveLabs/injective-ui/layer#master”, ensure `LOCAL_LAYER=true` is set when running locally.
+The dev server will start on `http://127.0.0.1:3000` (configurable via `PORT` and `HOST` in `.env`).
+
+**Notes:**
+- By default, the app uses the **vendored** `injective-ui` layer from this repo (faster, offline-capable).
+- To use the **remote** layer from GitHub instead, set `LOCAL_LAYER=false` in `.env` or run `yarn dev:remote`.
+- For security, the dev server binds to `127.0.0.1` (localhost-only). Use `HOST=0.0.0.0` in `.env` if you need network access.
 
 ## 📖 Documentation
 

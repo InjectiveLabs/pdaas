@@ -1,6 +1,7 @@
 import { head, hooks } from './nuxt-config'
 
-const isLocalLayer = process.env.LOCAL_LAYER === 'true'
+// Default to using the local vendored layer unless explicitly set to 'false'
+const isLocalLayer = process.env.LOCAL_LAYER !== 'false'
 const isProduction = process.env.NODE_ENV === 'production'
 
 export default defineNuxtConfig({
