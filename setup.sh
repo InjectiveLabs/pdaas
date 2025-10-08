@@ -28,6 +28,11 @@ print_info() {
     echo -e "${YELLOW}→${NC} $1"
 }
 
+# Load nvm if available
+if [ -f "$HOME/.nvm/nvm.sh" ]; then
+    source "$HOME/.nvm/nvm.sh"
+fi
+
 # Check if Node.js 20 is installed
 print_info "Checking Node.js version..."
 if command -v node &> /dev/null; then
@@ -39,10 +44,11 @@ if command -v node &> /dev/null; then
         print_info "Installing Node.js 20..."
         
         # Try to install via nvm if available
-        if command -v nvm &> /dev/null; then
+        if [ -f "$HOME/.nvm/nvm.sh" ]; then
             nvm install 20
             nvm use 20
-            print_success "Node.js 20 installed via nvm!"
+            nvm alias default 20
+            print_success "Node.js 20 installed via nvm and set as default!"
         else
             print_error "Please install Node.js 20 manually from https://nodejs.org/"
             print_info "Or install nvm first: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash"
@@ -58,7 +64,8 @@ else
         source "$HOME/.nvm/nvm.sh"
         nvm install 20
         nvm use 20
-        print_success "Node.js 20 installed via nvm!"
+        nvm alias default 20
+        print_success "Node.js 20 installed via nvm and set as default!"
     else
         print_error "Please install Node.js 20 first!"
         print_info "Easiest way: Install nvm and run this script again"
