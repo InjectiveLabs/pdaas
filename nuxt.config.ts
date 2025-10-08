@@ -82,7 +82,7 @@ export default defineNuxtConfig({
       process.env.VITE_BASE_URL &&
         !process.env.VITE_BASE_URL.includes('localhost')
         ? process.env.VITE_BASE_URL
-        : 'https://helixapp.com'
+        : 'https://pdaas.injective.com'
   },
 
   colorMode: {

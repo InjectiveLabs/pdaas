@@ -1,14 +1,14 @@
 export const metaTags = {
   title: process.env.VITE_NAME
     ? process.env.VITE_NAME
-    : 'Helix | Open Finance Reimagined',
+    : 'Injective PDaaS | Perp DEX As A Service',
   description:
-    'Trade on Helix - the premier decentralized spot and derivatives exchange with low fees and gas free execution',
+    'Build your own decentralized spot and derivatives exchange powered by Injective with low fees and gas free execution',
   keywords:
-    'injective protocol, dapp, decentralized app, cryptocurrency, cryptocurrency exchange, exchange, ethereum, erc20, futures, perpetuals, futures protocol, cosmos, spot trading, derivatives, injective, ibc, cross-chain',
+    'injective protocol, dapp, decentralized app, cryptocurrency, cryptocurrency exchange, exchange, ethereum, erc20, futures, perpetuals, futures protocol, cosmos, spot trading, derivatives, injective, ibc, cross-chain, pdaas',
   author: 'InjectiveLabs',
-  url: 'https://helixapp.com',
-  shortName: 'Helix',
+  url: process.env.VITE_BASE_URL || 'https://pdaas.injective.com',
+  shortName: 'PDaaS',
   twitterHandle: '@InjectiveLabs',
   ogImage: `${process.env.VITE_BASE_URL}/images/og-helix.jpeg`
 }
