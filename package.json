@@ -1,7 +1,7 @@
 {
-  "name": "injective-helix",
+  "name": "injective-pdaas",
   "version": "1.10.3",
-  "description": "The Premier Decentralized Crypto Exchange",
+  "description": "Injective PDaaS - Perp Dex As A Service",
   "license": "Apache-2.0",
   "author": "@InjectiveLabs",
   "engines": {

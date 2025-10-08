@@ -5,20 +5,20 @@ export default {
       'Fully on-chain order book, matching, and settlement. Liquidity included. Ready within minutes.',
 
     gasFees: 'Gas Fees',
-    whyHelix: 'Why Helix?',
+    whyHelix: 'Why Build Your Own DEX?',
     reimagined: '',
     latestNews: 'Latest News',
     totalVolume: 'Total Volume',
     totalMarkets: 'Total Markets',
     startTrading: 'Start Trading',
-    helixDocs: 'Helix Documentation',
+    helixDocs: 'Documentation',
     somethingIsBrewing: 'Something is brewing',
     builtForTheCommunity: 'Built for the Community',
     builtForTheCommunityDescription: 'No investors, no VCs, no nonsense.',
-    downloadHelixMobile: 'Download the Helix Mobile app for iOS or Android',
+    downloadHelixMobile: 'Download the Mobile app for iOS or Android',
 
     overview: {
-      title: 'Why Helix?',
+      title: 'Why Build Your Own DEX?',
       lpRewardsTitle: 'LP Rewards',
       tradingBotsTitle: 'Trading Bots',
       gasFreeTitle: 'Gas Free Trading',
@@ -26,7 +26,7 @@ export default {
       lpRewardsDescription: 'Provide liquidity and get paid for it.',
       description: 'Built as top-tier exchange, but fully decentralized.',
       gasFreeDescription:
-        'Never worry about gas fees on Helix. Zero gas, always.',
+        'Never worry about gas fees. Zero gas, always.',
       tradingBotsDescription:
         'Deploy advanced smart on-chain trading strategies in just a click.',
       tradeStocksDescription:
@@ -34,7 +34,7 @@ export default {
     },
 
     gettingStarted: {
-      title: 'Getting started on Helix',
+      title: 'Getting Started',
       injectiveBridge: 'Injective Bridge',
       description: 'Deposit crypto assets to Injective ',
       description2:
@@ -65,7 +65,7 @@ export default {
       usp1: 'Beginner Friendly',
       title: 'Trade Perps from Your Pocket',
       usp2: 'Crypto, Stocks, Commodities, and FX',
-      downloadHelixMobile: 'Download Helix Mobile'
+      downloadHelixMobile: 'Download Mobile App'
     },
 
     faq: {

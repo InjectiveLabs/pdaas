@@ -12,9 +12,9 @@ export default {
     rulesTermsAndConditions: 'Rules, Terms, and Conditions',
     refresh: 'The leaderboard refreshes at the top of each hour',
     description:
-      'Helix ranks the top traders based on their on-chain trading PnL',
+      'Ranks the top traders based on their on-chain trading PnL',
     tradeAndWin:
-      'Not on the leaderboard yet?  Make winning trades on Helix to claim your spot!',
+      'Not on the leaderboard yet?  Make winning trades to claim your spot!',
     blocked:
       'Residents of the United States, the United Kingdom, and certain other countries listed in the official {terms} of the Competition are ineligible to participate in or win the Competition.',
 

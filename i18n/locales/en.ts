@@ -133,9 +133,9 @@ export default {
 
       geoRestricted: {
         cta: 'Got it',
-        title: 'Helix not available in your region.',
+        title: 'Not available in your region.',
         description:
-          "We're unable to offer Helix in your region due to regulatory requirements. Our team is actively working to expand our service area while ensuring full compliance with local laws. We appreciate your interest and hope to welcome you to our growing global community soon. If you have any open positions, you may close them from the portfolio page."
+          "We're unable to offer this service in your region due to regulatory requirements. Our team is actively working to expand our service area while ensuring full compliance with local laws. We appreciate your interest and hope to welcome you to our growing global community soon. If you have any open positions, you may close them from the portfolio page."
       },
 
       devMode: {
