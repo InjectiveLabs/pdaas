@@ -4,8 +4,8 @@ const { pwaMetaTags, manifestMetaTags } = require('@/nuxt-config/meta')
 module.exports = {
   pwa: {
     icon: {
-      fileName: resolve(process.cwd(), './public/helix-favicon.png'),
-      source: resolve(process.cwd(), './public/helix-favicon.png')
+      fileName: resolve(process.cwd(), './public/pdaas.png'),
+      source: resolve(process.cwd(), './public/pdaas.png')
     },
 
     meta: {
