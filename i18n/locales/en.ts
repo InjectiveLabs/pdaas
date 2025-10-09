@@ -3,7 +3,6 @@ import swap from './en/swap'
 import guild from './en/guild'
 import toast from './en/toast'
 import trade from './en/trade'
-import vault from './en/vault'
 import market from './en/market'
 import wallet from './en/wallet'
 import points from './en/points'
@@ -12,12 +11,8 @@ import referral from './en/referral'
 import lpRewards from './en/lpRewards'
 import portfolio from './en/portfolio'
 import navigation from './en/navigation'
-import tradingBots from './en/tradingBots'
-import leaderboard from './en/leaderboard'
 import maintenance from './en/maintenance'
 import feeDiscounts from './en/feeDiscounts'
-import tradeAndEarn from './en/tradeAndEarn'
-import institutional from './en/institutional'
 import { TimeDuration } from '@/types'
 
 export default {
@@ -26,7 +21,6 @@ export default {
   ...guild,
   ...toast,
   ...trade,
-  ...vault,
   ...market,
   ...wallet,
   ...points,
@@ -35,12 +29,8 @@ export default {
   ...lpRewards,
   ...portfolio,
   ...navigation,
-  ...tradingBots,
-  ...leaderboard,
   ...maintenance,
   ...feeDiscounts,
-  ...tradeAndEarn,
-  ...institutional,
 
   common: {
     or: 'or',
