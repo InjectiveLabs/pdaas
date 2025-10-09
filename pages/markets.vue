@@ -3,7 +3,6 @@ import { dataCyTag } from '@shared/utils'
 import { NuxtUiIcons } from '@shared/types'
 import { IS_MAINNET } from '@shared/utils/constant'
 import { BigNumberInBase } from '@injectivelabs/utils'
-import { PartialsMarketsIAssetsBanner } from '#components'
 import { MarketCyTags, NoticeBanner, MarketCategoryType } from '@/types'
 
 const route = useRoute()
@@ -71,12 +70,6 @@ function setCategoryFromQuery() {
   return MarketCategoryType.All
 }
 
-function closeIAssetsBanner() {
-  appStore.setUserState({
-    ...appStore.userState,
-    bannersViewed: [...appStore.userState.bannersViewed, NoticeBanner.IAssets]
-  })
-}
 </script>
 
 <template>
@@ -94,10 +87,6 @@ function closeIAssetsBanner() {
         class="mt-8"
       />
 
-      <PartialsMarketsIAssetsBanner
-        v-if="!appStore.userState.bannersViewed.includes(NoticeBanner.IAssets)"
-        @banner:close="closeIAssetsBanner"
-      />
 
       <div class="max-w-full mt-4 lg:mb-2">
         <div
