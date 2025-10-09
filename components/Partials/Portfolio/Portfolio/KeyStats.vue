@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { BigNumberInBase } from '@injectivelabs/utils'
+import { BigNumberInBase, BigNumber } from '@injectivelabs/utils'
 
 const appStore = useAppStore()
 const accountStore = useAccountStore()
@@ -27,43 +27,32 @@ const allTimePnl = computed(
   () => new BigNumberInBase(accountStore.accountStats?.pnl || 0)
 )
 
-const tradableValue = computed(
-  () => new BigNumberInBase(aggregatedSubaccountTotalTradable?.toNumber() || 0)
-)
 </script>
 
 <template>
   <div class="border rounded-xl p-4">
-    <h4 class="font-semibold text-coolGray-200 text-sm">
+    <h4 class="font-semibold text-coolGray-200 text-lg mb-6">
       {{ $t('portfolio.keyStats.title') }}
     </h4>
 
-    <ul class="flex flex-col gap-6 mt-6">
-      <li class="flex justify-between gap-4 text-sm h-6">
-        <span class="text-coolGray-375">
+    <ul class="flex flex-col gap-4">
+      <li class="flex justify-between gap-4 text-base py-3 border-b border-coolGray-800">
+        <span class="text-coolGray-300 font-semibold text-base">
           {{ $t('portfolio.home.tradableBalance.title') }}
         </span>
 
-        <p class="flex text-gray-200">
-          <span class="mt-0.5 text-[13px]">$</span>
-          <CommonSkeletonSubaccountAmount>
-            <CommonNumberCounter
-              v-bind="{
-                size: 13,
-                value: tradableValue.toNumber()
-              }"
-            />
-          </CommonSkeletonSubaccountAmount>
-        </p>
+        <span class="text-white font-semibold text-base">
+          ${{ Number(aggregatedSubaccountTotalBalanceInUsd.toFixed(2)).toLocaleString() }}
+        </span>
       </li>
 
-      <li class="flex justify-between gap-4 text-sm h-6">
-        <span class="text-coolGray-375">
+      <li class="flex justify-between gap-4 text-base py-3 border-b border-coolGray-800">
+        <span class="text-coolGray-300 font-semibold text-base">
           {{ $t('portfolio.keyStats.allTimePnl') }}
         </span>
 
-        <p
-          class="flex"
+        <span
+          class="font-semibold text-base"
           :class="[
             appStore.userState.preferences.isHideBalances
               ? 'text-gray-200'
@@ -74,106 +63,58 @@ const tradableValue = computed(
                   : 'text-red-500'
           ]"
         >
-          <span class="mt-0.5 text-[13px]">$</span>
-          <CommonSkeletonSubaccountAmount>
-            <CommonNumberCounter
-              v-bind="{
-                size: 13,
-                value: allTimePnl.toNumber()
-              }"
-            />
-          </CommonSkeletonSubaccountAmount>
-        </p>
+          ${{ Number(allTimePnl.toNumber().toFixed(2)).toLocaleString() }}
+        </span>
       </li>
 
-      <li class="flex justify-between gap-4 text-sm h-6">
-        <span class="text-coolGray-375">
+      <li class="flex justify-between gap-4 text-base py-3 border-b border-coolGray-800">
+        <span class="text-coolGray-300 font-semibold text-base">
           {{ $t('portfolio.keyStats.totalVolume') }}
         </span>
 
-        <p class="flex text-gray-200">
-          <span class="mt-0.5 text-[13px]">$</span>
-          <CommonSkeletonSubaccountAmount>
-            <CommonNumberCounter
-              v-bind="{
-                size: 13,
-                value: totalVolume.toNumber()
-              }"
-            />
-          </CommonSkeletonSubaccountAmount>
-        </p>
+        <span class="text-white font-semibold text-base">
+          ${{ Number(totalVolume.toNumber().toFixed(2)).toLocaleString() }}
+        </span>
       </li>
 
-      <li class="flex justify-between gap-4 text-sm h-6">
-        <span class="text-coolGray-375">
+      <li class="flex justify-between gap-4 text-base py-3 border-b border-coolGray-800">
+        <span class="text-coolGray-300 font-semibold text-base">
           {{ $t('portfolio.keyStats.totalEquity') }}
         </span>
 
-        <p class="flex text-gray-200">
-          <span class="mt-0.5 text-[13px]">$</span>
-          <CommonSkeletonSubaccountAmount>
-            <CommonNumberCounter
-              v-bind="{
-                size: 13,
-                value: aggregatedSubaccountTotalBalanceInUsd.toNumber()
-              }"
-            />
-          </CommonSkeletonSubaccountAmount>
-        </p>
+        <span class="text-white font-semibold text-base">
+          ${{ Number(aggregatedSubaccountTotalBalanceInUsd.toFixed(2)).toLocaleString() }}
+        </span>
       </li>
 
-      <li class="flex justify-between gap-4 text-sm h-6">
-        <span class="text-coolGray-375">
+      <li class="flex justify-between gap-4 text-base py-3 border-b border-coolGray-800">
+        <span class="text-coolGray-300 font-semibold text-base">
           {{ $t('portfolio.keyStats.perpsAccountEquity') }}
         </span>
 
-        <p class="flex text-gray-200">
-          <span class="mt-0.5 text-[13px]">$</span>
-          <CommonSkeletonSubaccountAmount>
-            <CommonNumberCounter
-              v-bind="{
-                size: 13,
-                value: aggregatedSubaccountUnrealizedPnlInUsd.toNumber()
-              }"
-            />
-          </CommonSkeletonSubaccountAmount>
-        </p>
+        <span class="text-white font-semibold text-base">
+          ${{ Number(aggregatedSubaccountUnrealizedPnlInUsd.toFixed(2)).toLocaleString() }}
+        </span>
       </li>
 
-      <li class="flex justify-between gap-4 text-sm h-6">
-        <span class="text-coolGray-375">
+      <li class="flex justify-between gap-4 text-base py-3 border-b border-coolGray-800">
+        <span class="text-coolGray-300 font-semibold text-base">
           {{ $t('portfolio.keyStats.spotAccountEquity') }}
         </span>
 
-        <p class="flex text-gray-200">
-          <span class="mt-0.5 text-[13px]">$</span>
-          <CommonSkeletonSubaccountAmount>
-            <CommonNumberCounter
-              v-bind="{
-                size: 13,
-                value: spotEquityInBigNumber.toNumber()
-              }"
-            />
-          </CommonSkeletonSubaccountAmount>
-        </p>
+        <span class="text-white font-semibold text-base">
+          ${{ Number(spotEquityInBigNumber.toFixed(2)).toLocaleString() }}
+        </span>
       </li>
 
-      <li class="flex justify-between gap-4 text-sm h-6">
-        <span class="text-coolGray-375">
+      <li class="flex justify-between gap-4 text-base py-3 border-b border-coolGray-800">
+        <span class="text-coolGray-300 font-semibold text-base">
           {{ $t('portfolio.keyStats.stakingAccount') }}
         </span>
 
-        <p class="flex text-gray-200">
-          <span class="mt-0.5 text-[13px]">$</span>
-          <CommonSkeletonSubaccountAmount>
-            <CommonNumberCounter
-              v-bind="{
-                size: 13,
-                value: stakedAmountInUsd.toNumber()
-              }"
-            />
-          </CommonSkeletonSubaccountAmount>
-        </p>
+        <span class="text-white font-semibold text-base">
+          ${{ Number(stakedAmountInUsd.toFixed(2)).toLocaleString() }}
+        </span>
       </li>
     </ul>
   </div>
