@@ -17,6 +17,8 @@ const { valueToBigNumber: spotEquityInBigNumber } = useSharedBigNumberFormatter(
   )
 )
 
+const { aggregatedSubaccountTotalTradable } = useBalance()
+
 const totalVolume = computed(
   () => new BigNumberInBase(accountStore.accountStats?.volume || 0)
 )
@@ -33,6 +35,24 @@ const allTimePnl = computed(
     </h4>
 
     <ul class="flex flex-col gap-6 mt-6">
+      <li class="flex justify-between gap-4 text-sm h-6">
+        <span class="text-coolGray-375">
+          {{ $t('portfolio.home.tradableBalance.title') }}
+        </span>
+
+        <p class="flex text-gray-200">
+          <span class="mt-0.5 text-[13px]">$</span>
+          <CommonSkeletonSubaccountAmount>
+            <CommonNumberCounter
+              v-bind="{
+                size: 13,
+                value: aggregatedSubaccountTotalTradable.toNumber()
+              }"
+            />
+          </CommonSkeletonSubaccountAmount>
+        </p>
+      </li>
+
       <li class="flex justify-between gap-4 text-sm h-6">
         <span class="text-coolGray-375">
           {{ $t('portfolio.keyStats.allTimePnl') }}
