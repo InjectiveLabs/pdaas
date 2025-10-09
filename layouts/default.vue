@@ -143,7 +143,6 @@ watch(
     <LayoutBanner class="sticky top-[56px]" />
 
     <AppHocLoading
-      is-helix
       wrapper-class="h-screen"
       :is-loading="
         route.name !== MainPage.Index &&
