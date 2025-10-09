@@ -23,9 +23,9 @@ export default {
   },
   meta,
   link: [
-    { rel: 'icon', type: 'image/png', href: '/favicon.png' },
-    { rel: 'shortcut icon', type: 'image/png', href: '/favicon.png' },
-    { rel: 'apple-touch-icon', type: 'image/png', href: '/favicon.png' }
+    { rel: 'icon', type: 'image/png', href: '/pdaas.png' },
+    { rel: 'shortcut icon', type: 'image/png', href: '/pdaas.png' },
+    { rel: 'apple-touch-icon', type: 'image/png', href: '/pdaas.png' }
   ],
   script: [
     {
