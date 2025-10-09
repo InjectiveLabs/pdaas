@@ -143,7 +143,7 @@ watch(
     <LayoutBanner class="sticky top-[56px]" />
 
     <AppHocLoading
-      wrapper-class="h-screen"
+      is-full-screen
       :is-loading="
         route.name !== MainPage.Index &&
         (initialStatus.isLoading() || jsonStatus.isLoading())
