@@ -26,6 +26,10 @@ const totalVolume = computed(
 const allTimePnl = computed(
   () => new BigNumberInBase(accountStore.accountStats?.pnl || 0)
 )
+
+const tradableValue = computed(
+  () => new BigNumberInBase(aggregatedSubaccountTotalTradable?.toNumber() || 0)
+)
 </script>
 
 <template>
@@ -46,7 +50,7 @@ const allTimePnl = computed(
             <CommonNumberCounter
               v-bind="{
                 size: 13,
-                value: aggregatedSubaccountTotalTradable.toNumber()
+                value: tradableValue.toNumber()
               }"
             />
           </CommonSkeletonSubaccountAmount>
