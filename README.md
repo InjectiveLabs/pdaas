@@ -66,7 +66,8 @@ The setup script will:
 
 ---
 
-### 📖 Manual Setup (Advanced)
+<details>
+<summary><strong>📖 Manual Setup (Advanced)</strong></summary>
 
 If you prefer to set things up manually or want more control:
 
@@ -241,11 +242,16 @@ The dev server will start on `http://127.0.0.1:3000` (configurable via `PORT` an
 - To use the **remote** layer from GitHub instead, set `LOCAL_LAYER=false` in `.env` or run `yarn dev:remote`.
 - For security, the dev server binds to `127.0.0.1` (localhost-only). Use `HOST=0.0.0.0` in `.env` if you need network access.
 
+</details>
+
 ## 📖 Documentation
 
 This project is built using Nuxt and TailwindCSS and is powered by the [injective-ts monorepo](https://github.com/InjectiveLabs/injective-ts/). It vendors the shared `injective-ui` layer for a smooth, self‑contained local development experience while retaining upstream Injective compatibility.
 
 You can run the app locally without having to set up a relayer. Use the `public` network in your `VITE_NETWORK` `.env` configuration variable and run `yarn dev`. You can find available networks (predefined endpoint sets) [here](https://github.com/InjectiveLabs/injective-ts/blob/17b1aa5df39d5724baf6262b276980cf722a1cba/packages/networks/src/types.ts#L1). Using these endpoints (from the `public` network) gives 40% of trading fees to the community spend pool. Once you set up private endpoints, you can redirect that 40% to any address you wish.
+
+<details>
+<summary><strong>Deployment & Nuxt3</strong></summary>
 
 ### Deployment
 
@@ -255,7 +261,9 @@ See the official Nuxt docs for deployment guides.
 
 ### Nuxt3
 
-This project runs on Nuxt 3. You shouldn’t need any migration steps; just follow the Getting Started section above.
+This project runs on Nuxt 3. You shouldn't need any migration steps; just follow the Getting Started section above.
+
+</details>
 
 ---
 
