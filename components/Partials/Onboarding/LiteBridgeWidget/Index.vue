@@ -113,15 +113,6 @@ function buyInjWithCard() {
     >
       <div id="widget-container" />
 
-      <div class="mt-5">
-        <AppButton
-          variant="primary"
-          class="w-full px-4 py-2.5 text-sm font-medium rounded-lg bg-azure-blue-350 hover:bg-azure-blue-350/80 transition-colors ring-0 border-0"
-          @click="buyInjWithCard"
-        >
-          {{ $t('common.modal.onboarding.buyInjWithCard') }}
-        </AppButton>
-      </div>
     </div>
   </div>
 </template>
