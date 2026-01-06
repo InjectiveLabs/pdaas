@@ -81,7 +81,16 @@ export const useSharedJsonStore = defineStore('sharedJson', {
     blockHeightPollingMap: {},
     verifiedDerivativeMarketMap: {},
     chainUpgradeConfig: {} as JsonChainUpgrade,
-    helixMarketCategory: {} as JsonHelixCategory
+    helixMarketCategory: {
+      ai: [],
+      rwa: [],
+      defi: [],
+      stocks: [],
+      trending: [],
+      injective: [],
+      newMarkets: [],
+      deprecated: []
+    } as JsonHelixCategory
   }),
 
   getters: {
@@ -103,7 +112,7 @@ export const useSharedJsonStore = defineStore('sharedJson', {
       return (
         [
           ...state.helixMarketCategory.rwa,
-          ...state.helixMarketCategory.iAssets
+          ...state.helixMarketCategory.stocks
         ].find((market) => market.marketId === marketId) !== undefined
       )
     },
@@ -464,7 +473,7 @@ export const useSharedJsonStore = defineStore('sharedJson', {
 
         latestBlockHeight = total
         jsonStore.latestBlockHeight = latestBlockHeight
-      } catch {}
+      } catch { }
 
       const isValidChainUpgradeConfig =
         typeof config === 'object' &&
