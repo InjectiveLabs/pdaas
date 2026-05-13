@@ -8,23 +8,27 @@ const main = async () => {
     const git = simpleGit(process.cwd())
 
     const { latest } = await git.tags()
-    const { all } = await git.log({ from: latest, to: 'HEAD' })
     const branch = await git.revparse(['--abbrev-ref', 'HEAD'])
-
-    const gitTagLink = `https://github.com/InjectiveLabs/pdaas/releases/tag/${
+    const tag = process.env.GIT_TAG || latest || 'unreleased'
+    const gitTagLink =
       process.env.GIT_TAG || latest
-    }`
+        ? `https://github.com/InjectiveLabs/pdaas/releases/tag/${tag}`
+        : 'https://github.com/InjectiveLabs/pdaas'
 
     if (process.env.GIT_TAG) {
       storeJsonFile('app/json/gitVersion.json', {
         branch,
         gitTagLink,
-        tag: process.env.GIT_TAG,
+        tag,
         logs: []
       })
 
       return
     }
+
+    const { all } = await git.log(
+      latest ? { from: latest, to: 'HEAD' } : { maxCount: 20 }
+    )
 
     const logs = all.map((log: any) => ({
       ...log,
@@ -33,7 +37,7 @@ const main = async () => {
 
     storeJsonFile('app/json/gitVersion.json', {
       branch,
-      tag: latest,
+      tag,
       gitTagLink,
       logs
     })
