@@ -70,9 +70,7 @@ export default defineNuxtConfig({
   },
 
   extends: [
-    isLocalLayer
-      ? './injective-ui'
-      : 'github:InjectiveLabs/injective-ui/layer#master'
+    isLocalLayer ? './injective-ui' : 'github:InjectiveLabs/injective-ui/layer#master'
   ],
 
   // @ts-expect-error - typing issue

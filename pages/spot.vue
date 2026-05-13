@@ -2,7 +2,7 @@
 import { Status, StatusType } from '@injectivelabs/utils'
 import { TradeExecutionSide } from '@injectivelabs/ts-types'
 import { roundDustAmount } from '@/app/utils/formatters'
-import { UI_DEFAULT_MIN_DISPLAY_DECIMALS } from '@/app/utils/constants'
+import { APP_NAME, UI_DEFAULT_MIN_DISPLAY_DECIMALS } from '@/app/utils/constants'
 import { MarketKey, IsSpotKey, PortfolioStatusKey } from '@/types'
 import type { UiSpotMarket } from '@/types'
 
@@ -82,7 +82,7 @@ useHead({
 
     const ticker = market.value ? `${market.value.ticker} |` : ''
 
-    return `${price} ${ticker} Helix`
+    return `${price} ${ticker} ${APP_NAME}`
   })
 })
 
