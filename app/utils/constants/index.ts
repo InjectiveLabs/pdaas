@@ -6,6 +6,7 @@ export * from './setup'
 export * from './campaign'
 
 export const UI_ZERO_DECIMAL = 0
+export const APP_NAME = import.meta.env.VITE_NAME || 'PDaaS'
 export const UI_DEFAULT_MAX_DECIMALS = 18
 export const UI_DEFAULT_MIN_DISPLAY_DECIMALS = 2
 export const UI_DEFAULT_DISPLAY_DECIMALS = 4
