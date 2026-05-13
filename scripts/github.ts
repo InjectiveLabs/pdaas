@@ -11,7 +11,7 @@ const main = async () => {
     const { all } = await git.log({ from: latest, to: 'HEAD' })
     const branch = await git.revparse(['--abbrev-ref', 'HEAD'])
 
-    const gitTagLink = `https://github.com/InjectiveLabs/injective-helix/releases/tag/${
+    const gitTagLink = `https://github.com/InjectiveLabs/pdaas/releases/tag/${
       process.env.GIT_TAG || latest
     }`
 
@@ -28,7 +28,7 @@ const main = async () => {
 
     const logs = all.map((log: any) => ({
       ...log,
-      commitLink: `https://github.com/InjectiveLabs/injective-helix/commit/${log.hash}`
+      commitLink: `https://github.com/InjectiveLabs/pdaas/commit/${log.hash}`
     }))
 
     storeJsonFile('app/json/gitVersion.json', {
