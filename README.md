@@ -239,7 +239,7 @@ The dev server will start on `http://127.0.0.1:3000` (configurable via `PORT` an
 
 **Notes:**
 - By default, the app uses the **vendored** `injective-ui` layer from this repo (faster, offline-capable).
-- To use the **remote** layer from GitHub instead, set `LOCAL_LAYER=false` in `.env` or run `yarn dev:remote`. Remote mode is pinned by `NUXT_INJECTIVE_UI_LAYER_REF` so a fresh clone does not track `injective-ui#master` unexpectedly.
+- To use the **remote** layer from GitHub instead, set `LOCAL_LAYER=false` in `.env` or run `yarn dev:remote`.
 - For security, the dev server binds to `127.0.0.1` (localhost-only). Use `HOST=0.0.0.0` in `.env` if you need network access.
 
 </details>

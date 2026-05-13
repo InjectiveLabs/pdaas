@@ -3,10 +3,6 @@ import { head, hooks } from './nuxt-config'
 // Default to using the local vendored layer unless explicitly set to 'false'
 const isLocalLayer = process.env.LOCAL_LAYER !== 'false'
 const isProduction = process.env.NODE_ENV === 'production'
-const injectiveUiLayerRef =
-  process.env.NUXT_INJECTIVE_UI_LAYER_REF ||
-  'bdab2818f0b26f7371f14960ead6a4d39ce9399c'
-const remoteInjectiveUiLayer = `github:InjectiveLabs/injective-ui/layer#${injectiveUiLayerRef}`
 
 export default defineNuxtConfig({
   hooks,
@@ -74,7 +70,7 @@ export default defineNuxtConfig({
   },
 
   extends: [
-    isLocalLayer ? './injective-ui' : remoteInjectiveUiLayer
+    isLocalLayer ? './injective-ui' : 'github:InjectiveLabs/injective-ui/layer#master'
   ],
 
   // @ts-expect-error - typing issue
