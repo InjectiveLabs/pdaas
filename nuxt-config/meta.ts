@@ -1,3 +1,5 @@
+const baseUrl = process.env.VITE_BASE_URL || 'https://pdaas.injective.com'
+
 export const metaTags = {
   title: process.env.VITE_NAME
     ? process.env.VITE_NAME
@@ -7,10 +9,10 @@ export const metaTags = {
   keywords:
     'injective protocol, dapp, decentralized app, cryptocurrency, cryptocurrency exchange, exchange, ethereum, erc20, futures, perpetuals, futures protocol, cosmos, spot trading, derivatives, injective, ibc, cross-chain, pdaas',
   author: 'InjectiveLabs',
-  url: process.env.VITE_BASE_URL || 'https://pdaas.injective.com',
+  url: baseUrl,
   shortName: 'PDaaS',
   twitterHandle: '@InjectiveLabs',
-  ogImage: `${process.env.VITE_BASE_URL}/images/og-helix.jpeg`
+  ogImage: `${baseUrl}/images/og.jpeg`
 }
 
 export const nuxtMetaTags = [
@@ -65,11 +67,6 @@ export const nuxtMetaTags = [
   { hid: 'og:title', property: 'og:title', content: metaTags.title },
   { hid: 'og:site_name', property: 'og:site_name', content: metaTags.title },
   { hid: 'title', property: 'title', content: metaTags.title },
-  {
-    hid: 'apple-itunes-app',
-    name: 'apple-itunes-app',
-    content: 'app-id=6737353178'
-  }
 ]
 
 export const pwaMetaTags = {
